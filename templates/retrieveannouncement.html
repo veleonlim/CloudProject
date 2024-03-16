@@ -1,0 +1,66 @@
+
+{% if session['role'] == 'admin' %}
+    {% extends "layouts/baseadmin.html" %}
+{% else %}
+    {% extends "layouts/base.html" %}
+{% endif %}
+
+{% block title %} Event Details {% endblock title %}
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main>
+        {% include 'includes/preloader.html' %}
+      
+        <div class="section section-lg bg-primary-app">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center mb-5 mb-lg-6">
+                        <h2 class="display-2 fw-bold">
+                            Event Details
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="image-box">
+                            {% if image_url %}
+                                <img src="{{ image_url }}" alt="{{ event_name }}">
+                            {% endif %}
+                        </div>
+                        <form action="{{ url_for('announcement.update_announcement_route', announcement_id=announcement_id) }}" method="POST">
+                            <!-- Event Details -->
+                            <div class="mb-4">
+                                <label for="announcementName">Announcement Name</label>
+                                <input type="text" class="form-control" value="{{ announcement_name }}" name="announcement_name">
+                            </div>
+                            <div class="mb-4">
+                                <label for="announcement_start_date">Announcement Start Date</label>
+                                <input type="date" class="form-control" value="{{ announcement_start_date }}"name="announcement_start_date" >
+                            </div>
+                            <div class="mb-4">
+                                <label for="announcement_end_date">Announcement End Date</label>
+                                <input type="date" class="form-control" value="{{ announcement_end_date }}" name="announcement_end_date" >
+                            </div>
+                            <div class="mb-4">
+                                <label for="announcement_description">Announcement Description</label>
+                                <textarea class="form-control" rows="4"  name="announcement_description" >{{ announcement_description }}</textarea>
+                            </div>
+                            <!-- End of Event Details -->
+
+                            <!-- Update Event Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Update Announcement</button>
+                            </div>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

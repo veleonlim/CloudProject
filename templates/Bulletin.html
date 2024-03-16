@@ -1,0 +1,76 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Bulletin Board {% endblock title %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main>
+        {% include 'includes/preloader.html' %}
+
+        <div class="section section-lg bg-primary-app">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center mb-5 mb-lg-6">
+                        <h2 class="display-2 fw-bold">
+                            Bulletin Board
+                        </h2>
+                        <div class="section section-lg bg-primary-app">
+                            <div class="container text-center">
+                                <a href="/createevent" class="btn btn-primary btn-lg">Create Event</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="row">
+                            {% for event in events %}
+                                <div class="col-12 col-md-4 mb-4">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            {% if event.image_url %}
+                                                <img src="{{ event.image_url }}" alt="{{ event.name }}" class="card-img-top">
+                                            {% endif %}
+                                            <h5 class="card-title">{{ event.name }}</h5>
+                                            <p class="card-text"><strong>Email:</strong> {{ event.email }}</p>
+                                            <p class="card-text"><strong>Event Start Date:</strong> {{ event.event_start_date }}</p>
+                                            <p class="card-text"><strong>Event End Date:</strong> {{ event.event_end_date }}</p>
+                                            <p class="card-text"><strong>Description:</strong> {{ event.description }}</p>
+                                            <td><a href="{{ url_for('record.get_event_joined_records_view', event_id=event.event_id) }}">{{ event.joined_count }}/{{ event.capacity }}</a></td>
+                                            {% if event.joined_status %}
+                                            <td>
+                                                <form action="{{ url_for('record.leave_event', record_id=event.record_id) }}" method="post">
+                                                    <button type="submit" class="btn btn-warning">Leave</button>
+                                                </form>
+                                            </td>
+                                        {% else %}
+                                            <td>
+                                                <form action="{{ url_for('record.join_event', event_id=event.event_id, event_capacity=event.capacity) }}" method="post">
+                                                    <button type="submit" class="btn btn-warning">Join</button>
+                                                </form>
+                                            </td>
+
+                                        {% endif %}
+                                        <a href="{{ url_for('comment.retrieveevent', event_id=event.event_id) }}" class="btn btn-warning">Comment</a>
+                                        <a href="{{ url_for('comment.get_comments', event_id=event.event_id) }}" class="btn btn-warning">View Comment</a>
+                                            {% if event.ubtn %}
+                                                <a href="{{ url_for('events.retrieveevent', event_id=event.event_id) }}" class="btn btn-warning">Update</a>
+                                                <a href="{{ url_for('events.delete_event_route', event_id=event.event_id) }}" style="background-color: red;" class="btn btn-warning">Delete</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

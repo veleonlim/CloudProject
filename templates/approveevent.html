@@ -1,0 +1,78 @@
+
+{% if session['role'] == 'admin' %}
+    {% extends "layouts/baseadmin.html" %}
+{% else %}
+    {% extends "layouts/base.html" %}
+{% endif %}
+
+{% block title %} Event Approval Page {% endblock %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main>
+        {% include 'includes/preloader.html' %}
+
+        <div class="section section-lg bg-primary-app">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center mb-5 mb-lg-6">
+                        <h2 class="display-2 fw-bold">
+                            Event Approval
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-10">
+                        <div class="card bg-white border-gray-300">
+                            <div class="border-bottom px-4 py-5">
+                                <div class="row align-items-center">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Event image</th>
+                                                <th scope="col">Event Name</th>
+                                                <th scope="col">Event Description</th>
+                                                <th scope="col">Event Start Date</th>
+                                                <th scope="col">Event End Date</th>
+                                                <th scope="col">Approval Status</th>
+                                                <th scope="col">Email</th> <!-- Add the new attribute -->
+                                                <th scope="col">Capacity</th> <!-- Add the new attribute -->
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in events %}
+                                                <tr>
+                                                    <td><img src="{{ item.image_url }}"></td>
+                                                    <td>{{ item.event_name }}</td>
+                                                    <td>{{ item.event_description }}</td>
+                                                    <td>{{ item.event_start_date }}</td>
+                                                    <td>{{ item.event_end_date }}</td>
+                                                    <td>{{ item.approval_status }}</td>
+                                                    <td>{{ item.email }}</td> <!-- Display the new attribute -->
+                                                    <td>{{ item.capacity }}</td> <!-- Display the new attribute -->
+                                                    <td>
+                                                        <form action="{{ url_for('approval.approve_event_route', event_id=item.event_id) }}" method="post">
+                                                            <button type="submit" class="btn btn-warning">Approve</button>
+                                                        </form>
+                                                        <form action="{{ url_for('approval.reject_event_route', event_id=item.event_id) }}" method="post">
+                                                            <button type="submit" class="btn btn-warning" style="background-color: red;">Reject</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+{% endblock content %}

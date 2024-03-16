@@ -1,0 +1,38 @@
+
+{% if session['role'] == 'admin' %}
+    {% extends "layouts/baseadmin.html" %}
+{% else %}
+    {% extends "layouts/base.html" %}
+{% endif %}
+
+{% block title %} Freelancer Page {% endblock %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+<main>
+    <div>
+        <table class="table table-striped">
+            <thead>
+                {% include 'includes/preloader.html' %}
+            <tbody>
+                <tr>
+                    <td>No.</td>
+                    <td>EMAIL OF PARTICIPANT:</td>
+                </tr>
+                {% for participant_record in participant_records %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ participant_record.email }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </thead>
+        </table>
+    </div>
+</main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

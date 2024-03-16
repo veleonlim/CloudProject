@@ -1,0 +1,77 @@
+
+{% if session['role'] == 'admin' %}
+    {% extends "layouts/baseadmin.html" %}
+{% else %}
+    {% extends "layouts/base.html" %}
+{% endif %}
+{% block title %} View Comments {% endblock title %}
+
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main>
+        {% include 'includes/preloader.html' %}
+        <div class="section section-lg bg-primary-app">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center mb-5 mb-lg-6">
+                        <h2 class="display-2 fw-bold">
+                            View Comments
+                        </h2>
+                    </div>
+                </div>
+
+                <!-- Display Event Details -->
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="mb-4">
+                            <label for="eventID">Event Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon1"><span class="fas fa-tag"></span></span>
+                                <input type="text" class="form-control" name="event_name" value="{{ event_name }}" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="eventDate">Event Start Date</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon2"><span class="fas fa-calendar-alt"></span></span>
+                                <input type="date" class="form-control" name="event_date" value="{{ event_start_date }}" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="eventDate">Event End Date</label>
+                            <div class="input-group">
+                                <span class="input-group-text" id="basic-addon2"><span class="fas fa-calendar-alt"></span></span>
+                                <input type="date" class="form-control" name="event_date" value="{{ event_end_date }}" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="eventDescription">Event Description</label>
+                            <textarea class="form-control" name="event_description" rows="4" readonly>{{ event_description }}</textarea>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Display Comments -->
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <h3>Comments</h3>
+                        <ul>
+                            {% for comment in comments %}
+                                <li class="comment-pair">
+                                    <span class="email">{{ comment.email }}</span>:
+                                    {{ comment.comment }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

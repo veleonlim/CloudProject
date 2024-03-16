@@ -1,0 +1,78 @@
+{% if session['role'] == 'admin' %}
+    {% extends "layouts/baseadmin.html" %}
+{% else %}
+    {% extends "layouts/base.html" %}
+{% endif %}
+
+{% block title %} Announcement Details {% endblock title %}
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main>
+        {% include 'includes/preloader.html' %}
+
+        <div class="section section-lg bg-primary-app">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center mb-5 mb-lg-6">
+                        <h2 class="display-2 fw-bold">
+                            Announcement Event
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                          <!-- Form -->
+                          <form action="{{ url_for('announcement.create_announcement_route') }}" method="POST" enctype="multipart/form-data">
+                          
+                            <div class="mb-4">
+                    
+        
+                            <div class="mb-4">
+                                <label for="announcement_name">Announcement Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1"><span class="fas fa-pencil-alt"></span></span>
+                                    <input type="text" class="form-control" placeholder="Enter announcement name" name="announcement_name" required>
+                                </div>
+                            </div>
+                           
+                    
+                            <div class="mb-4">
+                                <label for="announcement_start_date">Event Start Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon2"><span class="fas fa-calendar-alt"></span></span>
+                                    <input type="date" class="form-control" name="announcement_start_date" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="announcement_end_date">Event End Date</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon2"><span class="fas fa-calendar-alt"></span></span>
+                                    <input type="date" class="form-control" name="announcement_end_date" required>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="announcement_img">Announcement Image</label>
+                                <input type="file" name="announcement_img" accept="image/*" >
+                            </div>                   
+                            <div class="mb-4">
+                                <label for="announcementDescription">Announcement Description</label>
+                                <textarea placeholder="Describe your announcement" class="form-control" name="announcement_description" rows="4" required></textarea>
+                            </div>
+                         
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Create Event</button>
+                            </div>
+                        </form>
+                           <!-- End of Form -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}

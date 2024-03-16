@@ -1,0 +1,76 @@
+
+{% if session['role'] == 'admin' %}
+    {% extends "layouts/baseadmin.html" %}
+{% else %}
+    {% extends "layouts/base.html" %}
+{% endif %}
+
+{% block title %} Event Details {% endblock title %}
+<!-- Specific Page CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <main>
+        {% include 'includes/preloader.html' %}
+      
+        <div class="section section-lg bg-primary-app">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 text-center mb-5 mb-lg-6">
+                        <h2 class="display-2 fw-bold">
+                            Event Details
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-8">
+                        <div class="image-box">
+                            {% if image_url %}
+                                <img src="{{ image_url }}" alt="{{ event_name }}">
+                            {% endif %}
+                        </div>
+                        <form action="{{ url_for('events.update_event_route', event_id=event_id) }}" method="POST">
+                            <!-- Event Details -->
+                            <div class="mb-4">
+                                <label for="eventName">Event Name</label>
+                                <input type="text" class="form-control" value="{{ event_name }}" name="event_name">
+                            </div>
+                            <div class="mb-4">
+                                <label for="eventDate">Event Start Date</label>
+                                <input type="date" class="form-control" value="{{ event_start_date }}"name="event_start_date" >
+                            </div>
+                            <div class="mb-4">
+                                <label for="eventDate">Event End Date</label>
+                                <input type="date" class="form-control" value="{{ event_end_date }}" name="event_end_date" >
+                            </div>
+                            <div class="mb-4">
+                                <label for="eventDescription">Event Description</label>
+                                <textarea class="form-control" rows="4"  name="event_description" >{{ event_description }}</textarea>
+                            </div>
+                            <div class="mb-4">
+                      
+                                <input type="text" class="form-control" value="pending" name="approval_status" hidden >
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="capacity">Event Capacity</label>
+                                <input type="number" class="form-control" value="{{ capacity }}" name="capacity" >
+                            </div>
+                    
+                            <!-- End of Event Details -->
+
+                            <!-- Update Event Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Update Event</button>
+                            </div>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE -->
+{% block javascripts %}{% endblock javascripts %}
